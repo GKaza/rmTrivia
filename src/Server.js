@@ -1,42 +1,43 @@
 const express = require('express');
 const app = express();
 const fetch = require("node-fetch");
-const port = 3000;
+const port = 8000;
 
 const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-let list = []
 
 const getPageNumber = () => {
-    let x;
     let da = Math.floor(Math.random());
+    let list = [];
+    let i = 0;
     let url;
-    da = 1 ? url = `https://rickandmortyapi.com/api/character/?status=alive` : url = `https://rickandmortyapi.com/api/character/?status=dead`;
+    da == 1 ? url = `https://rickandmortyapi.com/api/character/?status=alive` : url = `https://rickandmortyapi.com/api/character/?status=dead`;
     fetch(url)
         .then(response => response.json())
         .then(data => {
-            x = {
-                "pages": data.info.pages,
-                "da": da
-            };
+            while (i < 12) {
+                list[i] = getChar({
+                    "pages": data.info.pages,
+                    "da": da
+                });
+            }
+            return list;        
         })
-    return x;
 }
 
-const getChar = () => {
+const getChar = (obj) => {
+    let url;
     let rand = Math.floor(Math.random() * 20);
-    let page = Math.ceil(Math.random() * 10);
-    let url = `https://rickandmortyapi.com/api/character/?status=alive&page=${page}`
-    // getPageNumber().da = 1 ? url = `https://rickandmortyapi.com/api/character/?status=alive&page=${page}` : url = `https://rickandmortyapi.com/api/character/?status=dead&page=${page}`;
+    let page = Math.ceil(Math.random() * obj.pages);
+    obj.da == 1 ? url = `https://rickandmortyapi.com/api/character/?status=alive&page=${page}` : url = `https://rickandmortyapi.com/api/character/?status=dead&page=${page}`;
     fetch(url)
         .then(response => response.json())
         .then(data => {
             return data.results[rand];
         })
 }
-
 // while (i < 12) {
 //             randChar = Math.floor(Math.random() * 100);
 //             fetch(`https://rickandmortyapi.com/api/character/${randChar}`)
