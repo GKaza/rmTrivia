@@ -17,8 +17,8 @@ const getList = async function () {
     for (let i = 0; i < 12; i += 1) {
         da = Math.floor(Math.random() * Math.floor(2))
         da == 1 ? url = `https://rickandmortyapi.com/api/character/?status=alive` : url = `https://rickandmortyapi.com/api/character/?status=dead`;
-        pages = getPageNumber(url);
-        randomPage = Math.ceil(Math.random() * 8);
+        // pages = getPageNumber(url);
+        randomPage = Math.ceil(Math.random() * 7);
         randomChar = Math.floor(Math.random() * 20);
         url = url + '&page=' + randomPage
         console.log(url);
@@ -32,14 +32,14 @@ const getList = async function () {
     return list;
 }
 
-const getPageNumber = async function (url) {
-    const y = await fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            return data.info.pages;
-        })
-    return y;
-}
+// const getPageNumber = async function (url) {
+//     const y = await fetch(url)
+//         .then(response => response.json())
+//         .then(data => {
+//             return data.info.pages;
+//         })
+//     return y;
+// }
 
 
 app.get('/', async (req, res) => {

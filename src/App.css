@@ -21,3 +21,7 @@ margin-bottom: 40px;
   flex-wrap: wrap;
   justify-content: space-around;
 }
+
+.btn:hover {
+  background: rgb(255, 230, 0);
+}

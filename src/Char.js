@@ -10,7 +10,7 @@ function Char (props) {
             <p>Gender: {props.gender}</p>
             <p>Species: {props.species}</p>
             <p>Location: {props.location}</p>
-            <p>Status: <button>Alive</button><button>Dead</button></p>
+            <p>Status: <button className="btn" value={props.status} onClick={(e) => {props.handleToUpdate(e)}}>Alive</button><button className="btn" value={props.status} onClick={(e) => {props.handleToUpdate(e)}}>Dead</button></p>
         </div>
       );
 }
