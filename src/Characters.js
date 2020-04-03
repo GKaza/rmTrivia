@@ -36,8 +36,8 @@ class Characters extends React.Component {
         if (isLoading) {
             return <p>Loading...</p>
         }
-        if (counter == 11){
-            return <h3>Finished! You got {right} out of 12!</h3>
+        if (counter == 12){
+            return <h3 className='result'>Game Over! You got {right} out of 12!</h3>
         }
         return (
             <div className='characters'>

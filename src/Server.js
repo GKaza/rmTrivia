@@ -21,7 +21,6 @@ const getList = async function () {
         randomPage = Math.ceil(Math.random() * 7);
         randomChar = Math.floor(Math.random() * 20);
         url = url + '&page=' + randomPage
-        console.log(url);
         const x = await fetch(url)
             .then(response => response.json())
             .then(data => {
