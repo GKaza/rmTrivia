@@ -7,89 +7,50 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-
-const getPageNumber = () => {
-    let da = Math.floor(Math.random());
+const getList = async function () {
     let list = [];
-    let i = 0;
+    let da;
     let url;
-    da == 1 ? url = `https://rickandmortyapi.com/api/character/?status=alive` : url = `https://rickandmortyapi.com/api/character/?status=dead`;
+    let pages;
+    let randomPage;
+    let randomChar;
+    for (let i = 0; i < 12; i += 1) {
+        da = Math.floor(Math.random() * Math.floor(2))
+        da == 1 ? url = `https://rickandmortyapi.com/api/character/?status=alive` : url = `https://rickandmortyapi.com/api/character/?status=dead`;
+        pages = getPageNumber(url);
+        randomPage = Math.ceil(Math.random() * pages);
+        randomChar = Math.floor(Math.random() * 20);
+        url = url + '&page=' + randomPage
+        console.log(url);
+        const x = await fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                return data.results[randomChar];
+            })
+        list[i] = x;
+    }
+    return list;
+}
+
+const getPageNumber = (url) => {
+    let pageNo;
     fetch(url)
         .then(response => response.json())
         .then(data => {
-            while (i < 12) {
-                list[i] = getChar({
-                    "pages": data.info.pages,
-                    "da": da
-                });
-            }
-            return list;        
+            pageNo = data.info.pages;
         })
+    return pageNo;
 }
 
-const getChar = (obj) => {
-    let url;
-    let rand = Math.floor(Math.random() * 20);
-    let page = Math.ceil(Math.random() * obj.pages);
-    obj.da == 1 ? url = `https://rickandmortyapi.com/api/character/?status=alive&page=${page}` : url = `https://rickandmortyapi.com/api/character/?status=dead&page=${page}`;
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            return data.results[rand];
-        })
-}
-// while (i < 12) {
-//             randChar = Math.floor(Math.random() * 100);
-//             fetch(`https://rickandmortyapi.com/api/character/${randChar}`)
-//                 .then((response) => {
-//                     if (response.status = "Alive" || "Dead") {
-//                         list[i] = response.json();
-//                         i += 1;
-//                     }
-//                 })
-//         }
-//         console.log(list);
-//         return x;
-//     }
 
-
-app.get('/', (req, res) => {
-    getPageNumber();
-    res.status(200).send(getPageNumber());
+app.get('/', async (req, res) => {
+    x = await getList()
+    res.writeHead(200, { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
+    res.write(JSON.stringify(x));
+    res.end()
 })
-
 
 app.listen(port, (err) => {
     if (err) { console.log(err) };
     console.log('Listening on port ' + port);
 })
-
-
-// const getRandomChar = () => {
-//     let i = 0;
-//     let randChar;
-//     let ans = {
-//         results: []
-//     };
-//     while (i < 12) {
-//         randChar = Math.floor(Math.random() * 100);
-//         fetch(`https://rickandmortyapi.com/api/character/${randChar}`)
-//             .then((response) => {
-//                 if (response.status = "Alive" || "Dead") {
-//                     ans.results[i] = response.json();
-//                     i += 1;
-//                 }
-//             })
-//     }
-//     console.log(ans);
-//     return ans;
-// }
-
-// app.get('/api/characters', (req, res) => {
-//     getRandomChar();
-
-//     console.log(ans);
-//     res.status(200).send(ans);
-// });
-
-

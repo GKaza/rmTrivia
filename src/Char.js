@@ -10,7 +10,7 @@ function Char (props) {
             <p>Gender: {props.gender}</p>
             <p>Species: {props.species}</p>
             <p>Location: {props.location}</p>
-            <p>Status: {props.status}</p>
+            <p>Status: <button>Alive</button><button>Dead</button></p>
         </div>
       );
 }

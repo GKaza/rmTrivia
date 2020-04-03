@@ -1,6 +1,7 @@
 import React from 'react';
 import Char from './Char'
 
+
 class Characters extends React.Component {
     constructor(props) {
         super(props);
@@ -11,9 +12,9 @@ class Characters extends React.Component {
     }
     componentDidMount() {
         this.setState({ isLoading: true })
-        fetch("./Server.js")
+        fetch("http://localhost:8000/")
             .then((response) => response.json())
-            .then((data) => this.setState({ results: data.results, isLoading: false }))
+            .then((list) => this.setState({ results: list, isLoading: false }))
     }
 
     renderCharacters() {
@@ -25,7 +26,6 @@ class Characters extends React.Component {
     render() {
         const { results, isLoading } = this.state;
         if (isLoading) {
-            console.log(results)
             return <p>Loading...</p>
         }
         return (
@@ -35,9 +35,5 @@ class Characters extends React.Component {
         );
     }
 }
-//fetch make api call in componentDidMount 
-//render loading..
-//render api results
-
 
 export default Characters;
