@@ -1,7 +1,6 @@
 import React from 'react';
 import Char from './Char'
 
-
 class Characters extends React.Component {
     constructor(props) {
         super(props);
@@ -10,6 +9,7 @@ class Characters extends React.Component {
             isLoading: false,
         }
     }
+    
     componentDidMount() {
         this.setState({ isLoading: true })
         fetch("http://localhost:8000/")
